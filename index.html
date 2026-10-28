@@ -125,7 +125,6 @@ button{font-family:inherit}
               <image-slot id="{{ b.slot }}" shape="circle" placeholder="{{ b.ph }}"></image-slot>
             </div>
             <h3 style="margin:0;font-family:'Noto Serif Display',serif;font-weight:800;font-size:clamp(20px,2.4vw,28px)">{{ b.name }}</h3>
-            <button onClick="{{ b.book }}" aria-label="{{ b.aria }}" style="height:44px;padding:0 clamp(10px,1.6vw,20px);max-width:100%;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-size:clamp(13px,1.4vw,15px);font-weight:700;cursor:pointer;white-space:nowrap" style-hover="background:#EEF1F5;color:#000;border-color:#EEF1F5">{{ b.btn }}</button>
           </article>
         </sc-for>
       </div>
@@ -674,7 +673,7 @@ class Component extends DCLogic {
     const out = {
       t, isDesk, isMob, year: new Date().getFullYear(),
       headerBg: st.scrolled || st.menu ? '#000' : 'transparent', headerLine: st.scrolled && !st.menu ? 'rgba(238,241,245,0.12)' : 'transparent',
-      headerBookLabel: st.w < 400 ? t.book_mini : t.book,
+      headerBookLabel: t.book,
       menuOpen: st.menu && isMob, burgerTop: st.menu ? 'translateY(4px) rotate(45deg)' : 'none', burgerBot: st.menu ? 'translateY(-4px) rotate(-45deg)' : 'none',
       toggleMenu: () => this.setState(s => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
       toggleLang: () => { const n = lang === 'el' ? 'en' : 'el'; try { localStorage.setItem('btc_lang', n); } catch (e) {} this.setState({ lang: n }); },
@@ -685,7 +684,7 @@ class Component extends DCLogic {
       heroTrA: tr || 'opacity 1s ease-out, transform 1.2s ease-out', heroTrC: tr || 'opacity .6s ease-out .8s, transform .6s ease-out .8s',
       statusLine, statusDot: open ? '#EEF1F5' : '#5A5E64',
       marquee: this.marquee(t.marquee),
-      services: DATA.services.map((s, i) => ({ dir: i % 2 ? 'row-reverse' : 'row', slot: 'service-' + s.id, ph: L(s.name), name: L(s.name), desc: L(s.desc), dur: `${s.dur} ${t.min}`, price: `${s.price}€`, aria: `${t.book_short}: ${L(s.name)}`, book: () => this.openBook({ service: s.id }) })),
+      services: DATA.services.map((s, i) => ({ dir: 'row-reverse', slot: 'service-' + s.id, ph: L(s.name), name: L(s.name), desc: L(s.desc), dur: `${s.dur} ${t.min}`, price: `${s.price}€`, aria: `${t.book_short}: ${L(s.name)}`, book: () => this.openBook({ service: s.id }) })),
       barbers: DATA.barbers.map(b => ({ slot: 'barber-' + b.id, ph: `${t.photo_ph} · ${L(b.name)}`, name: L(b.name), role: L(b.role), bio: L(b.bio), ig: b.ig || '', hasIg: !!b.ig, bookLabel: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, btn: st.w >= 760 ? `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}` : t.book_short, aria: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, book: () => this.openBook({ barber: b.id }) })),
       masonry: (this.props.galleryLayout ?? 'masonry') === 'masonry', gridLayout: this.props.galleryLayout === 'grid',
       gallery: GAL.map((r, i) => ({ slot: 'gallery-' + (i + 1), ratio: r, ph: `${t.gallery_ph} ${i + 1}`, aria: `${t.gallery_ph} ${i + 1} / ${GAL.length}`, open: () => this.setState({ lb: i }) })),
