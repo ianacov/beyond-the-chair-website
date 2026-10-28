@@ -17,7 +17,6 @@
 <link rel="icon" href="./assets/logo.png">
 <meta property="og:image" content="./assets/hero.jpg">
 <link rel="preload" as="image" href="./assets/hero.jpg">
-<script src="./image-slot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BarberShop","name":"Beyond the Chair","address":{"@type":"PostalAddress","streetAddress":"Βαλαωρίτου 35 Α","addressLocality":"Θεσσαλονίκη","addressCountry":"GR"},"telephone":"+302310000000","sameAs":["https://www.instagram.com/beyondthechair_skg/","https://www.facebook.com/profile.php?id=61566480209272"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday"],"opens":"10:00","closes":"20:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"17:00"}],"potentialAction":{"@type":"ReserveAction","target":"https://beyondthechair.gr/el/booking"}}</script>
 <style>
 html{scroll-behavior:smooth;background:#000}
@@ -107,7 +106,7 @@ button{font-family:inherit}
               </div>
             </div>
             <div style="flex:none;width:clamp(88px,18vw,200px);aspect-ratio:1;border-radius:10px;overflow:hidden;background:#161616;filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
-              <image-slot id="{{ s.slot }}" shape="rect" placeholder="{{ s.ph }}"></image-slot>
+              <img src="{{ s.img }}" alt="{{ s.ph }}" loading="lazy" decoding="async" draggable="false" style="display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none">
             </div>
           </article>
         </sc-for>
@@ -122,7 +121,7 @@ button{font-family:inherit}
         <sc-for list="{{ barbers }}" as="b" hint-placeholder-count="3">
           <article style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(10px,1.6vw,18px)">
             <div style="width:100%;max-width:200px;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#161616;border:1px solid rgba(238,241,245,0.12);filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
-              <image-slot id="{{ b.slot }}" shape="circle" placeholder="{{ b.ph }}"></image-slot>
+              <img src="{{ b.img }}" alt="{{ b.ph }}" loading="lazy" decoding="async" draggable="false" style="display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none">
             </div>
             <h3 style="margin:0;font-family:'Noto Serif Display',serif;font-weight:800;font-size:clamp(20px,2.4vw,28px)">{{ b.name }}</h3>
           </article>
@@ -144,7 +143,7 @@ button{font-family:inherit}
         <div style="columns:240px;column-gap:12px">
           <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="12">
             <figure style="position:relative;margin:0 0 12px;break-inside:avoid;aspect-ratio:{{ g.ratio }};border-radius:8px;overflow:hidden;background:#161616;filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
-              <image-slot id="{{ g.slot }}" shape="rect" placeholder="{{ g.ph }}"></image-slot>
+              <img src="{{ g.img }}" alt="{{ g.ph }}" loading="lazy" decoding="async" draggable="false" style="display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none">
               <button onClick="{{ g.open }}" aria-label="{{ g.aria }}" style="position:absolute;right:8px;bottom:8px;width:44px;height:44px;border-radius:4px;border:0;background:rgba(0,0,0,.7);color:#EEF1F5;font-size:18px;cursor:pointer">⤢</button>
             </figure>
           </sc-for>
@@ -154,7 +153,7 @@ button{font-family:inherit}
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px">
           <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="12">
             <figure style="position:relative;margin:0;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#161616;filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
-              <image-slot id="{{ g.slot }}" shape="rect" placeholder="{{ g.ph }}"></image-slot>
+              <img src="{{ g.img }}" alt="{{ g.ph }}" loading="lazy" decoding="async" draggable="false" style="display:block;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none">
               <button onClick="{{ g.open }}" aria-label="{{ g.aria }}" style="position:absolute;right:8px;bottom:8px;width:44px;height:44px;border-radius:4px;border:0;background:rgba(0,0,0,.7);color:#EEF1F5;font-size:18px;cursor:pointer">⤢</button>
             </figure>
           </sc-for>
@@ -273,7 +272,7 @@ button{font-family:inherit}
 <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
   <div role="dialog" aria-modal="true" aria-label="{{ lbLabel }}" style="position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.96);display:flex;align-items:center;justify-content:center;padding:72px 16px">
     <div style="position:relative;height:100%;max-width:100%;aspect-ratio:{{ lbRatio }};border-radius:8px;overflow:hidden;background:#161616">
-      <image-slot id="{{ lbSlot }}" shape="rect" fit="contain" placeholder="{{ lbLabel }}"></image-slot>
+      <img src="{{ lbImg }}" alt="{{ lbLabel }}" loading="lazy" decoding="async" draggable="false" style="display:block;width:100%;height:100%;object-fit:contain;-webkit-user-drag:none;user-select:none;pointer-events:none">
     </div>
     <button onClick="{{ lbClose }}" aria-label="{{ t.close }}" style="position:absolute;top:14px;right:14px;width:48px;height:48px;background:transparent;border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:24px;cursor:pointer">×</button>
     <button onClick="{{ lbPrev }}" aria-label="Previous" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);width:48px;height:48px;background:rgba(0,0,0,.6);border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:20px;cursor:pointer">←</button>
@@ -477,6 +476,9 @@ const DATA = {
       hours: { 3: [600, 1200], 4: [600, 1200], 5: [600, 1200], 6: [540, 1020] }, breaks: [[810, 840]], off: ['2026-11-04', '2026-11-05'] }
   ]
 };
+const IMG_BASE = 'https://images.unsplash.com/photo-';
+const IMGS = { service: {'cut': '1647140655214-e4a2d914971f', 'fade': '1635273051937-a0ddef9573b6', 'beard': '1599011176306-4a96f1516d4d', 'shave': '1599351431202-1e0f0137899a', 'combo': '1503951914875-452162b0f3f1', 'kids': '1705976062088-5433328c2dcd'}, barber: {'aris': '1630827020718-3433092696e7', 'stelios': '1553521041-d168abd31de3', 'marios': '1605497788044-5a32c7078486'}, gallery: ['1781455793310-8427c96454c7', '1759134198561-e2041049419c', '1585747860715-2ba37e788b70', '1783908688260-0c47404926f3', '1773904215697-e6c21fc27ac2', '1781768526571-ef9c333279c7', '1621645582931-d1d3e6564943', '1536520002442-39764a41e987', '1621605815971-fbc98d665033', '1517832606299-7ae9b720a186', '1735150949874-ec9c9c82b2c4', '1532710093739-9470acff878f'] };
+const imgUrl = (id, w) => IMG_BASE + id + '?auto=format&fit=crop&w=' + w + '&q=70';
 const GAL = ['3/4', '1/1', '4/5', '3/4', '4/3', '3/4', '1/1', '4/5', '3/4', '4/3', '1/1', '3/4'];
 const T = {
   el: {
@@ -684,17 +686,17 @@ class Component extends DCLogic {
       heroTrA: tr || 'opacity 1s ease-out, transform 1.2s ease-out', heroTrC: tr || 'opacity .6s ease-out .8s, transform .6s ease-out .8s',
       statusLine, statusDot: open ? '#EEF1F5' : '#5A5E64',
       marquee: this.marquee(t.marquee),
-      services: DATA.services.map((s, i) => ({ dir: 'row-reverse', slot: 'service-' + s.id, ph: L(s.name), name: L(s.name), desc: L(s.desc), dur: `${s.dur} ${t.min}`, price: `${s.price}€`, aria: `${t.book_short}: ${L(s.name)}`, book: () => this.openBook({ service: s.id }) })),
-      barbers: DATA.barbers.map(b => ({ slot: 'barber-' + b.id, ph: `${t.photo_ph} · ${L(b.name)}`, name: L(b.name), role: L(b.role), bio: L(b.bio), ig: b.ig || '', hasIg: !!b.ig, bookLabel: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, btn: st.w >= 760 ? `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}` : t.book_short, aria: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, book: () => this.openBook({ barber: b.id }) })),
+      services: DATA.services.map((s, i) => ({ dir: 'row-reverse', slot: 'service-' + s.id, img: imgUrl(IMGS.service[s.id], 480), ph: L(s.name), name: L(s.name), desc: L(s.desc), dur: `${s.dur} ${t.min}`, price: `${s.price}€`, aria: `${t.book_short}: ${L(s.name)}`, book: () => this.openBook({ service: s.id }) })),
+      barbers: DATA.barbers.map(b => ({ slot: 'barber-' + b.id, img: imgUrl(IMGS.barber[b.id], 480), ph: `${t.photo_ph} · ${L(b.name)}`, name: L(b.name), role: L(b.role), bio: L(b.bio), ig: b.ig || '', hasIg: !!b.ig, bookLabel: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, btn: st.w >= 760 ? `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}` : t.book_short, aria: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, book: () => this.openBook({ barber: b.id }) })),
       masonry: (this.props.galleryLayout ?? 'masonry') === 'masonry', gridLayout: this.props.galleryLayout === 'grid',
-      gallery: GAL.map((r, i) => ({ slot: 'gallery-' + (i + 1), ratio: r, ph: `${t.gallery_ph} ${i + 1}`, aria: `${t.gallery_ph} ${i + 1} / ${GAL.length}`, open: () => this.setState({ lb: i }) })),
+      gallery: GAL.map((r, i) => ({ slot: 'gallery-' + (i + 1), img: imgUrl(IMGS.gallery[i], 800), ratio: r, ph: `${t.gallery_ph} ${i + 1}`, aria: `${t.gallery_ph} ${i + 1} / ${GAL.length}`, open: () => this.setState({ lb: i }) })),
       instagram: DATA.instagram, facebook: DATA.facebook, phone: DATA.phone, phoneHref: DATA.phoneHref, email: DATA.email, mailHref: 'mailto:' + DATA.email, address: L(DATA.address),
       gmapsDir: 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent('Βαλαωρίτου 35, Θεσσαλονίκη'), appleDir: 'https://maps.apple.com/?daddr=' + encodeURIComponent('Valaoritou 35, Thessaloniki'),
       hoursRows, mapShown: st.mapOn || st.consent === 'all', mapHidden: !(st.mapOn || st.consent === 'all'), loadMap: () => this.setState({ mapOn: true }),
       showBar: isMob && st.pastHero && !st.bk && !st.menu, footerPadBottom: isMob ? '120px' : '48px',
       showCookie: st.consent === null && !st.bk, cookieBottom: isMob && st.pastHero ? 'calc(88px + env(safe-area-inset-bottom))' : '16px',
       acceptCookies: () => this.setConsent('all'), rejectCookies: () => this.setConsent('essential'),
-      lbOpen: st.lb >= 0, lbSlot: 'gallery-' + (st.lb + 1), lbRatio: GAL[Math.max(st.lb, 0)], lbLabel: `${t.gallery_ph} ${st.lb + 1}`, lbCount: `${st.lb + 1} / ${GAL.length}`,
+      lbOpen: st.lb >= 0, lbSlot: 'gallery-' + (st.lb + 1), lbImg: st.lb >= 0 ? imgUrl(IMGS.gallery[st.lb], 1600) : '', lbRatio: GAL[Math.max(st.lb, 0)], lbLabel: `${t.gallery_ph} ${st.lb + 1}`, lbCount: `${st.lb + 1} / ${GAL.length}`,
       lbClose: () => this.setState({ lb: -1 }), lbPrev: () => this.lbStep(-1), lbNext: () => this.lbStep(1),
       legalOpen: !!st.legal, legalTitle: st.legal ? t.legal[st.legal][0] : '', legalParas: st.legal ? t.legal[st.legal][1].map(text => ({ text })) : [],
       openPrivacy: () => this.setState({ legal: 'privacy' }), openTerms: () => this.setState({ legal: 'terms' }), openCookies: () => this.setState({ legal: 'cookies' }), closeLegal: () => this.setState({ legal: null }),

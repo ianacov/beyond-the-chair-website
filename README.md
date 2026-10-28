@@ -5,5 +5,6 @@ Prototype ιστοσελίδας για το barber shop «Beyond the Chair» (�
 Live: https://ianacov.github.io/beyond-the-chair-website/
 
 - `index.html` — η σελίδα
-- `support.js`, `image-slot.js` — runtime του prototype
+- `support.js` — runtime του prototype
+- Placeholder φωτογραφίες από Unsplash (σταθερές, δεν αλλάζουν από τον επισκέπτη)
 - `assets/` — εικόνες (hero, logo)
