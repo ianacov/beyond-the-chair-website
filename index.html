@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Beyond the Chair · Barber Shop Θεσσαλονίκη</title>
+<meta name="description" content="Ανδρικό κουρείο στη Θεσσαλονίκη, Βαλαωρίτου 35 Α. Κούρεμα, ξύρισμα, περιποίηση γενειάδας. Κλείσε ραντεβού online.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Serif+Display:ital,wght@0,700;0,800;0,900;1,500;1,600&amp;family=Playfair+Display:ital,wght@1,500;1,600&amp;family=Ultra&amp;display=swap">
+<link rel="icon" href="./assets/logo.png">
+<meta property="og:image" content="./assets/hero.jpg">
+<link rel="preload" as="image" href="./assets/hero.jpg">
+<script src="./image-slot.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BarberShop","name":"Beyond the Chair","address":{"@type":"PostalAddress","streetAddress":"Βαλαωρίτου 35 Α","addressLocality":"Θεσσαλονίκη","addressCountry":"GR"},"telephone":"+302310000000","sameAs":["https://www.instagram.com/beyondthechair_skg/","https://www.facebook.com/profile.php?id=61566480209272"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday"],"opens":"10:00","closes":"20:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"17:00"}],"potentialAction":{"@type":"ReserveAction","target":"https://beyondthechair.gr/el/booking"}}</script>
+<style>
+html{scroll-behavior:smooth;background:#000}
+body{margin:0;background:#000;color:#EEF1F5;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+a{color:#EEF1F5;text-decoration:none}
+a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+button{font-family:inherit}
+:focus-visible{outline:2px solid #EEF1F5;outline-offset:3px}
+::selection{background:#EEF1F5;color:#000}
+@keyframes btc-marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none !important}[data-marquee]{animation:none !important}}
+</style>
+</helmet>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:70;height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(16px,4vw,48px);background:{{ headerBg }};border-bottom:1px solid {{ headerLine }};transition:background .3s, border-color .3s">
+  <a href="#top" aria-label="Beyond the Chair" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+    <span role="img" aria-label="Beyond the Chair" style="display:block;flex:none;width:39px;height:34px;background:url('./assets/logo.png') no-repeat;background-size:143.3px 80.6px;background-position:-51.0px -20.1px"></span>
+  </a>
+  <sc-if value="{{ isDesk }}" hint-placeholder-val="{{ true }}">
+    <nav aria-label="Main" style="display:flex;gap:36px;font-size:14px;font-weight:600;letter-spacing:.04em">
+      <a href="#services" style="color:#A8ACB2" style-hover="color:#EEF1F5">{{ t.nav_services }}</a>
+      <a href="#team" style="color:#A8ACB2" style-hover="color:#EEF1F5">{{ t.nav_barbers }}</a>
+      <a href="#blog" style="color:#A8ACB2" style-hover="color:#EEF1F5">{{ t.nav_gallery }}</a>
+      <a href="#hours" style="color:#A8ACB2" style-hover="color:#EEF1F5">{{ t.nav_hours }}</a>
+      <a href="#contact" style="color:#A8ACB2" style-hover="color:#EEF1F5">{{ t.nav_contact }}</a>
+    </nav>
+  </sc-if>
+  <div style="display:flex;align-items:center;gap:8px">
+    <button onClick="{{ openBook }}" style="height:44px;padding:0 18px;background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap" style-hover="background:#fff">{{ headerBookLabel }}</button>
+    <sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Menu" style="width:44px;height:44px;background:transparent;border:0;color:#EEF1F5;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+        <span style="display:block;width:22px;height:2px;background:#EEF1F5;transition:transform .25s;transform:{{ burgerTop }}"></span>
+        <span style="display:block;width:22px;height:2px;background:#EEF1F5;transition:transform .25s;transform:{{ burgerBot }}"></span>
+      </button>
+    </sc-if>
+  </div>
+</header>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <nav aria-label="Mobile" style="position:fixed;inset:0;z-index:65;background:#000;padding:120px 28px 40px;display:flex;flex-direction:column;gap:8px;background-image:radial-gradient(ellipse 80% 40% at 50% 0%, rgba(238,241,245,.10), transparent 70%)">
+    <a href="#services" onClick="{{ closeMenu }}" style="font-family:'Noto Serif Display',serif;font-weight:800;font-size:40px;padding:10px 0;border-bottom:1px solid rgba(238,241,245,0.12)">{{ t.nav_services }}</a>
+    <a href="#team" onClick="{{ closeMenu }}" style="font-family:'Noto Serif Display',serif;font-weight:800;font-size:40px;padding:10px 0;border-bottom:1px solid rgba(238,241,245,0.12)">{{ t.nav_barbers }}</a>
+    <a href="#blog" onClick="{{ closeMenu }}" style="font-family:'Noto Serif Display',serif;font-weight:800;font-size:40px;padding:10px 0;border-bottom:1px solid rgba(238,241,245,0.12)">{{ t.nav_gallery }}</a>
+    <a href="#hours" onClick="{{ closeMenu }}" style="font-family:'Noto Serif Display',serif;font-weight:800;font-size:40px;padding:10px 0;border-bottom:1px solid rgba(238,241,245,0.12)">{{ t.nav_hours }}</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="font-family:'Noto Serif Display',serif;font-weight:800;font-size:40px;padding:10px 0;border-bottom:1px solid rgba(238,241,245,0.12)">{{ t.nav_contact }}</a>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:6px;color:#A8ACB2;font-size:15px">
+      <a href="{{ phoneHref }}">{{ phone }}</a>
+      <div style="display:flex;gap:20px"><a href="{{ instagram }}" target="_blank" rel="noopener">Instagram</a><a href="{{ facebook }}" target="_blank" rel="noopener">Facebook</a></div>
+    </div>
+  </nav>
+</sc-if>
+
+<main id="top">
+  <section aria-label="Beyond the Chair" style="position:relative;min-height:100svh;display:flex;align-items:center;padding:96px clamp(14px,5vw,64px) 56px;overflow:hidden;background:#000">
+    <div style="width:100%;max-width:1320px;margin:0 auto;display:flex;flex-direction:{{ heroDir }};align-items:center;gap:clamp(24px,4vw,64px)">
+    <div style="flex:{{ heroTextFlex }};width:{{ heroTextW }};min-width:0;display:flex;flex-direction:column;align-items:{{ heroAlign }};gap:24px;opacity:{{ heroTextOp }};transform:translateY({{ heroTextY }});transition:{{ heroTrC }}">
+      <sc-if value="{{ heroWide }}" hint-placeholder-val="{{ true }}"><p style="margin:0;font-family:'Noto Serif Display',serif;font-weight:800;font-size:clamp(34px,4.2vw,60px);line-height:1.05;letter-spacing:-.015em;max-width:14ch;text-wrap:balance">{{ t.hero_lead }}</p></sc-if>
+      <div style="display:flex;flex-wrap:nowrap;gap:10px;margin-top:4px;width:{{ heroTextW }};max-width:440px">
+        <button onClick="{{ openBook }}" style="flex:1 1 auto;min-width:0;white-space:nowrap;height:54px;padding:0 clamp(6px,2vw,28px);background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:clamp(13px,3.8vw,16px);font-weight:700;cursor:pointer" style-hover="background:#fff">{{ t.book }}</button>
+        <a href="#services" style="flex:1 1 auto;min-width:0;justify-content:center;white-space:nowrap;height:54px;padding:0 clamp(6px,2vw,26px);display:flex;align-items:center;border:1px solid rgba(238,241,245,.4);border-radius:4px;font-size:clamp(13px,3.8vw,16px);font-weight:600;color:#EEF1F5;text-decoration:none" style-hover="border-color:#EEF1F5;text-decoration:none">{{ t.hero_cta2 }}</a>
+      </div>
+      <sc-if value="{{ heroWide }}" hint-placeholder-val="{{ true }}"><p style="margin:0;display:flex;align-items:center;gap:10px;font-size:14px;color:#A8ACB2"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:{{ statusDot }}"></span>{{ statusLine }}</p></sc-if>
+    </div>
+    <h1 style="flex:{{ heroImgFlex }};width:{{ heroTextW }};min-width:0;max-height:{{ heroImgMaxH }};margin:0;aspect-ratio:1.25;overflow:hidden;opacity:{{ heroDoorOp }};transform:scale({{ heroScale }});transition:{{ heroTrA }}">
+      <img src="./assets/hero.jpg" alt="Beyond the Chair" width="2048" height="2048" fetchpriority="high" style="display:block;width:100%;height:100%;object-fit:cover;object-position:50% 52%;transform:scale(1.18)">
+    </h1>
+    </div>
+  </section>
+
+  <div aria-hidden="true" style="border-top:1px solid rgba(238,241,245,0.12);border-bottom:1px solid rgba(238,241,245,0.12);background:#000;overflow:hidden;padding:clamp(18px,2.4vw,28px) 0">{{ marquee }}</div>
+
+  <section id="services" style="scroll-margin-top:72px;padding:clamp(80px,12vw,160px) clamp(20px,5vw,64px);background:#0E0E0E;background-image:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(238,241,245,.07), transparent 70%)">
+    <div style="max-width:1240px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(40px,6vw,72px);font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.015em">{{ t.services_title }}</h2>
+      <div style="display:flex;flex-direction:column;gap:clamp(14px,2vw,24px);max-width:1040px;margin:0 auto">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+          <article style="display:flex;flex-direction:{{ s.dir }};align-items:center;gap:clamp(14px,3vw,40px)">
+            <div style="flex:1 1 0;min-width:0;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:clamp(14px,2vw,22px) 0;border-bottom:1px solid rgba(238,241,245,0.12)">
+              <div style="min-width:0;display:flex;flex-direction:column;gap:6px">
+                <h3 style="margin:0;font-family:'Noto Serif Display',serif;font-weight:800;font-size:clamp(20px,2.6vw,34px);line-height:1.1;text-wrap:balance">{{ s.name }}</h3>
+                <span style="color:#A8ACB2;font-size:clamp(13px,1.4vw,15px);white-space:nowrap">{{ s.dur }}</span>
+              </div>
+              <div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+                <span style="font-family:'Ultra',serif;font-size:clamp(20px,2.4vw,30px);line-height:1">{{ s.price }}</span>
+                <button onClick="{{ s.book }}" aria-label="{{ s.aria }}" style="height:44px;padding:0 16px;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap" style-hover="background:#EEF1F5;color:#000;border-color:#EEF1F5">{{ t.book_short }}</button>
+              </div>
+            </div>
+            <div style="flex:none;width:clamp(88px,18vw,200px);aspect-ratio:1;border-radius:10px;overflow:hidden;background:#161616;filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
+              <image-slot id="{{ s.slot }}" shape="rect" placeholder="{{ s.ph }}"></image-slot>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="team" style="scroll-margin-top:72px;padding:clamp(80px,12vw,160px) clamp(20px,5vw,64px);background:#000;background-image:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(238,241,245,.07), transparent 70%)">
+    <div style="max-width:1240px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(40px,6vw,72px);font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.015em">{{ t.barbers_title }}</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,3vw,48px);max-width:960px;margin:0 auto">
+        <sc-for list="{{ barbers }}" as="b" hint-placeholder-count="3">
+          <article style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(10px,1.6vw,18px)">
+            <div style="width:100%;max-width:200px;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#161616;border:1px solid rgba(238,241,245,0.12);filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
+              <image-slot id="{{ b.slot }}" shape="circle" placeholder="{{ b.ph }}"></image-slot>
+            </div>
+            <h3 style="margin:0;font-family:'Noto Serif Display',serif;font-weight:800;font-size:clamp(20px,2.4vw,28px)">{{ b.name }}</h3>
+            <button onClick="{{ b.book }}" aria-label="{{ b.aria }}" style="height:44px;padding:0 clamp(10px,1.6vw,20px);max-width:100%;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-size:clamp(13px,1.4vw,15px);font-weight:700;cursor:pointer;white-space:nowrap" style-hover="background:#EEF1F5;color:#000;border-color:#EEF1F5">{{ b.btn }}</button>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" style="scroll-margin-top:72px;padding:clamp(80px,12vw,160px) clamp(20px,5vw,64px);background:#0E0E0E;background-image:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(238,241,245,.07), transparent 70%)">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(40px,6vw,72px)">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <h2 style="margin:0;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.015em">{{ t.gallery_title }}</h2>
+          <p style="margin:0;color:#A8ACB2;font-size:17px;line-height:1.6;max-width:46ch;text-wrap:pretty">{{ t.gallery_sub }}</p>
+        </div>
+        <a href="{{ instagram }}" target="_blank" rel="noopener" style="height:50px;padding:0 20px;display:flex;align-items:center;gap:10px;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap" style-hover="border-color:#EEF1F5;text-decoration:none">Instagram · @beyondthechair_skg →</a>
+      </div>
+      <sc-if value="{{ masonry }}" hint-placeholder-val="{{ true }}">
+        <div style="columns:240px;column-gap:12px">
+          <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="12">
+            <figure style="position:relative;margin:0 0 12px;break-inside:avoid;aspect-ratio:{{ g.ratio }};border-radius:8px;overflow:hidden;background:#161616;filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
+              <image-slot id="{{ g.slot }}" shape="rect" placeholder="{{ g.ph }}"></image-slot>
+              <button onClick="{{ g.open }}" aria-label="{{ g.aria }}" style="position:absolute;right:8px;bottom:8px;width:44px;height:44px;border-radius:4px;border:0;background:rgba(0,0,0,.7);color:#EEF1F5;font-size:18px;cursor:pointer">⤢</button>
+            </figure>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ gridLayout }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px">
+          <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="12">
+            <figure style="position:relative;margin:0;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#161616;filter:grayscale(1) contrast(1.1);transition:filter .5s" style-hover="filter:none">
+              <image-slot id="{{ g.slot }}" shape="rect" placeholder="{{ g.ph }}"></image-slot>
+              <button onClick="{{ g.open }}" aria-label="{{ g.aria }}" style="position:absolute;right:8px;bottom:8px;width:44px;height:44px;border-radius:4px;border:0;background:rgba(0,0,0,.7);color:#EEF1F5;font-size:18px;cursor:pointer">⤢</button>
+            </figure>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="hours" style="scroll-margin-top:72px;padding:clamp(80px,12vw,160px) clamp(20px,5vw,64px);background:#000;background-image:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(238,241,245,.07), transparent 70%)">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px">
+          <h2 style="margin:0;min-width:0;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(36px,6vw,84px);line-height:1;letter-spacing:-.015em">{{ t.hours_title }}</h2>
+          <button onClick="{{ openBook }}" style="flex:none;height:52px;padding:0 clamp(14px,2vw,24px);background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:clamp(14px,3.8vw,16px);font-weight:700;cursor:pointer;white-space:nowrap" style-hover="background:#fff">{{ t.book }}</button>
+        </div>
+        <p style="margin:0;display:flex;align-items:center;gap:10px;font-size:16px;color:#EEF1F5"><span aria-hidden="true" style="flex:none;width:8px;height:8px;border-radius:50%;background:{{ statusDot }}"></span>{{ statusLine }}</p>
+      </div>
+      <div>
+        <table style="width:100%;border-collapse:collapse;font-size:16px">
+          <tbody>
+            <sc-for list="{{ hoursRows }}" as="h" hint-placeholder-count="7">
+              <tr style="background:{{ h.bg }};font-weight:{{ h.fw }}">
+                <th scope="row" style="text-align:left;font-weight:inherit;padding:12px 12px;border-bottom:1px solid rgba(238,241,245,0.12)">{{ h.day }} <span style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#A8ACB2;margin-left:8px">{{ h.tag }}</span></th>
+                <td style="text-align:right;padding:12px 12px;border-bottom:1px solid rgba(238,241,245,0.12);color:{{ h.fg }};font-variant-numeric:tabular-nums">{{ h.val }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="scroll-margin-top:72px;padding:clamp(80px,12vw,160px) clamp(20px,5vw,64px);background:#0E0E0E;background-image:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(238,241,245,.07), transparent 70%)">
+    <div style="max-width:1240px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(40px,6vw,72px);font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(40px,6vw,84px);line-height:1;letter-spacing:-.015em">{{ t.contact_title }}</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,5vw,72px)">
+        <div style="display:flex;flex-direction:column;gap:32px">
+          <address style="font-style:normal;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:24px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#A8ACB2">{{ t.address_l }}</span><span style="font-size:18px;line-height:1.4">{{ address }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#A8ACB2">{{ t.phone_l }}</span><a href="{{ phoneHref }}" style="font-size:18px">{{ phone }}</a></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#A8ACB2">Email</span><a href="{{ mailHref }}" style="font-size:18px;word-break:break-all">{{ email }}</a></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#A8ACB2">Social</span><div style="display:flex;gap:16px;font-size:18px"><a href="{{ instagram }}" target="_blank" rel="noopener">Instagram</a><a href="{{ facebook }}" target="_blank" rel="noopener">Facebook</a></div></div>
+          </address>
+          <p style="margin:0;font-size:15px;color:#A8ACB2;line-height:1.55">{{ t.parking }}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#161616;border:1px solid rgba(238,241,245,0.12)">
+            <sc-if value="{{ mapShown }}" hint-placeholder-val="{{ false }}">
+              <iframe title="Google Maps · Βαλαωρίτου 35 Α" src="https://www.google.com/maps?q=%CE%92%CE%B1%CE%BB%CE%B1%CF%89%CF%81%CE%AF%CF%84%CE%BF%CF%85%2035%20%CE%98%CE%B5%CF%83%CF%83%CE%B1%CE%BB%CE%BF%CE%BD%CE%AF%CE%BA%CE%B7&amp;output=embed" style="position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.92) contrast(.9)" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </sc-if>
+            <sc-if value="{{ mapHidden }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px;text-align:center;background:radial-gradient(ellipse 60% 60% at 50% 40%, rgba(238,241,245,.08), transparent 70%)">
+                <p style="margin:0;font-family:'Noto Serif Display',serif;font-weight:800;font-size:24px">{{ address }}</p>
+                <p style="margin:0;font-size:14px;color:#A8ACB2;max-width:36ch;line-height:1.5">{{ t.map_consent }}</p>
+                <button onClick="{{ loadMap }}" style="height:44px;padding:0 18px;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.4);border-radius:4px;font-size:14px;font-weight:700;cursor:pointer" style-hover="border-color:#EEF1F5">{{ t.map_load }}</button>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <a href="{{ gmapsDir }}" target="_blank" rel="noopener" style="height:50px;display:flex;align-items:center;justify-content:center;background:#EEF1F5;color:#000;border-radius:4px;font-weight:700;font-size:15px;text-decoration:none" style-hover="background:#fff;color:#000;text-decoration:none">{{ t.directions }} · Google</a>
+            <a href="{{ appleDir }}" target="_blank" rel="noopener" style="height:50px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-weight:700;font-size:15px;text-decoration:none" style-hover="border-color:#EEF1F5;text-decoration:none">{{ t.directions }} · Apple</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="padding:64px clamp(20px,5vw,64px) {{ footerPadBottom }};background:#000;border-top:1px solid rgba(238,241,245,0.12)">
+  <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span role="img" aria-label="Beyond the Chair" style="display:block;flex:none;width:64px;height:56px;background:url('./assets/logo.png') no-repeat;background-size:236.1px 132.8px;background-position:-84.0px -33.2px"></span>
+      <p style="margin:0;color:#A8ACB2;font-size:15px;line-height:1.55;max-width:30ch">{{ t.footer_line }}</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:15px;color:#A8ACB2">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase">{{ t.hours_l }}</span>
+      <span style="color:#EEF1F5">{{ t.hours_short1 }}</span>
+      <span style="color:#EEF1F5">{{ t.hours_short2 }}</span>
+      <span>{{ t.hours_short3 }}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#A8ACB2">Social</span>
+      <a href="{{ instagram }}" target="_blank" rel="noopener">Instagram · @beyondthechair_skg</a>
+      <a href="{{ facebook }}" target="_blank" rel="noopener">Facebook</a>
+      <a href="{{ phoneHref }}">{{ phone }}</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:15px;align-items:flex-start">
+      <span style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#A8ACB2;margin-bottom:4px">{{ t.legal_l }}</span>
+      <button onClick="{{ openPrivacy }}" style="background:none;border:0;padding:6px 0;color:#EEF1F5;font-size:15px;cursor:pointer;text-align:left" style-hover="text-decoration:underline">{{ t.privacy }}</button>
+      <button onClick="{{ openTerms }}" style="background:none;border:0;padding:6px 0;color:#EEF1F5;font-size:15px;cursor:pointer;text-align:left" style-hover="text-decoration:underline">{{ t.terms }}</button>
+      <button onClick="{{ openCookies }}" style="background:none;border:0;padding:6px 0;color:#EEF1F5;font-size:15px;cursor:pointer;text-align:left" style-hover="text-decoration:underline">{{ t.cookies }}</button>
+    </div>
+  </div>
+  <p style="max-width:1240px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(238,241,245,0.12);font-size:13px;color:#A8ACB2">© {{ year }} Beyond the Chair · {{ address }}</p>
+</footer>
+
+<sc-if value="{{ showBar }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(0,0,0,.92);backdrop-filter:blur(8px);border-top:1px solid rgba(238,241,245,0.12)">
+    <button onClick="{{ openBook }}" style="flex:1;height:52px;background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:16px;font-weight:700;cursor:pointer">{{ t.book }}</button>
+    <a href="{{ phoneHref }}" aria-label="{{ t.call }}" style="width:52px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"></path></svg>
+    </a>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Cookies" style="position:fixed;z-index:80;left:16px;right:16px;bottom:{{ cookieBottom }};max-width:520px;margin:0 auto;padding:20px;background:#161616;border:1px solid rgba(238,241,245,0.12);border-radius:10px;display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.6)">
+    <p style="margin:0;font-size:14px;line-height:1.55;color:#EEF1F5">{{ t.cookie_text }}</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button onClick="{{ rejectCookies }}" style="height:44px;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.4);border-radius:4px;font-size:14px;font-weight:700;cursor:pointer">{{ t.reject }}</button>
+      <button onClick="{{ acceptCookies }}" style="height:44px;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.4);border-radius:4px;font-size:14px;font-weight:700;cursor:pointer">{{ t.accept }}</button>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ lbLabel }}" style="position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.96);display:flex;align-items:center;justify-content:center;padding:72px 16px">
+    <div style="position:relative;height:100%;max-width:100%;aspect-ratio:{{ lbRatio }};border-radius:8px;overflow:hidden;background:#161616">
+      <image-slot id="{{ lbSlot }}" shape="rect" fit="contain" placeholder="{{ lbLabel }}"></image-slot>
+    </div>
+    <button onClick="{{ lbClose }}" aria-label="{{ t.close }}" style="position:absolute;top:14px;right:14px;width:48px;height:48px;background:transparent;border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:24px;cursor:pointer">×</button>
+    <button onClick="{{ lbPrev }}" aria-label="Previous" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);width:48px;height:48px;background:rgba(0,0,0,.6);border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:20px;cursor:pointer">←</button>
+    <button onClick="{{ lbNext }}" aria-label="Next" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:48px;height:48px;background:rgba(0,0,0,.6);border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:20px;cursor:pointer">→</button>
+    <p style="position:absolute;bottom:18px;left:0;right:0;margin:0;text-align:center;font-size:14px;color:#A8ACB2">{{ lbCount }}</p>
+  </div>
+</sc-if>
+
+<sc-if value="{{ legalOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ legalTitle }}" style="position:fixed;inset:0;z-index:95;background:#000;overflow:auto;padding:96px clamp(20px,5vw,64px) 64px">
+    <button onClick="{{ closeLegal }}" aria-label="{{ t.close }}" style="position:fixed;top:14px;right:14px;width:48px;height:48px;background:#000;border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:24px;cursor:pointer">×</button>
+    <article style="max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0 0 12px;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(36px,5vw,56px);line-height:1.05">{{ legalTitle }}</h2>
+      <sc-for list="{{ legalParas }}" as="lp" hint-placeholder-count="4">
+        <p style="margin:0;font-size:17px;line-height:1.65;color:#A8ACB2">{{ lp.text }}</p>
+      </sc-for>
+    </article>
+  </div>
+</sc-if>
+
+<sc-if value="{{ bkOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ t.bk_title }}" style="position:fixed;inset:0;z-index:100;background:#000;overflow:auto;background-image:radial-gradient(ellipse 70% 30% at 50% 0%, rgba(238,241,245,.08), transparent 70%)">
+    <div style="max-width:760px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding:0 clamp(16px,4vw,32px)">
+      <div style="position:sticky;top:0;z-index:2;background:#000;padding:14px 0 16px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <span style="display:flex;align-items:center;gap:12px"><span role="img" aria-label="Beyond the Chair" style="display:block;flex:none;width:30px;height:26px;background:url('./assets/logo.png') no-repeat;background-size:109.6px 61.6px;background-position:-39.0px -15.4px"></span><span style="font-size:14px;font-weight:600;color:#A8ACB2">{{ t.bk_title }}</span></span>
+          <button onClick="{{ closeBook }}" aria-label="{{ t.close }}" style="width:44px;height:44px;background:transparent;border:1px solid rgba(238,241,245,.35);border-radius:4px;color:#EEF1F5;font-size:22px;cursor:pointer">×</button>
+        </div>
+        <sc-if value="{{ bkNotDone }}" hint-placeholder-val="{{ true }}">
+          <ol aria-label="Progress" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+              <li aria-current="{{ st.current }}" style="display:flex;flex-direction:column;gap:8px">
+                <span style="height:3px;border-radius:2px;background:{{ st.bar }}"></span>
+                <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:{{ st.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ st.label }}</span>
+              </li>
+            </sc-for>
+          </ol>
+        </sc-if>
+      </div>
+
+      <div style="flex:1;padding:20px 0 32px">
+        <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+          <h2 style="margin:0 0 6px;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(32px,5vw,48px)">{{ t.s1_title }}</h2>
+          <p style="margin:0 0 24px;color:#A8ACB2;font-size:15px">{{ t.s1_sub }}</p>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ bkServices }}" as="o" hint-placeholder-count="6">
+              <button onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="min-height:72px;display:flex;align-items:center;gap:16px;padding:14px 18px;text-align:left;background:{{ o.bg }};color:{{ o.fg }};border:1px solid {{ o.bd }};border-radius:8px;cursor:pointer;transition:background .15s">
+                <span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:4px;border:1.5px solid {{ o.fg }};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">{{ o.mark }}</span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:700">{{ o.name }}</span><span style="font-size:14px;opacity:.75">{{ o.dur }}</span></span>
+                <span style="font-family:'Ultra',serif;font-size:20px">{{ o.price }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+          <h2 style="margin:0 0 6px;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(32px,5vw,48px)">{{ t.s2_title }}</h2>
+          <p style="margin:0 0 24px;color:#A8ACB2;font-size:15px">{{ t.s2_sub }}</p>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ bkBarbers }}" as="o" hint-placeholder-count="4">
+              <button onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="min-height:76px;display:flex;align-items:center;gap:16px;padding:12px 18px;text-align:left;background:{{ o.bg }};color:{{ o.fg }};border:1px solid {{ o.bd }};border-radius:8px;cursor:pointer">
+                <span aria-hidden="true" style="flex:none;width:48px;height:48px;border-radius:50%;border:1.5px solid {{ o.fg }};display:flex;align-items:center;justify-content:center;font-family:'Noto Serif Display',serif;font-weight:800;font-size:20px">{{ o.initial }}</span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:700">{{ o.name }}</span><span style="font-size:14px;opacity:.75">{{ o.sub }}</span></span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+          <h2 style="margin:0 0 6px;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(32px,5vw,48px)">{{ t.s3_title }}</h2>
+          <p style="margin:0 0 24px;color:#A8ACB2;font-size:15px">{{ t.s3_sub }}</p>
+          <div style="border:1px solid rgba(238,241,245,0.12);border-radius:10px;padding:16px;background:#0E0E0E">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <button onClick="{{ calPrev }}" disabled="{{ calPrevDis }}" aria-label="Previous month" style="width:44px;height:44px;background:transparent;border:1px solid rgba(238,241,245,.25);border-radius:4px;color:#EEF1F5;font-size:18px;cursor:pointer;opacity:{{ calPrevOp }}">←</button>
+              <span style="font-family:'Noto Serif Display',serif;font-weight:800;font-size:20px;text-transform:capitalize">{{ calLabel }}</span>
+              <button onClick="{{ calNext }}" disabled="{{ calNextDis }}" aria-label="Next month" style="width:44px;height:44px;background:transparent;border:1px solid rgba(238,241,245,.25);border-radius:4px;color:#EEF1F5;font-size:18px;cursor:pointer;opacity:{{ calNextOp }}">→</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+              <sc-for list="{{ calWd }}" as="wd" hint-placeholder-count="7">
+                <span style="text-align:center;font-size:12px;font-weight:700;color:#A8ACB2;padding:6px 0">{{ wd.l }}</span>
+              </sc-for>
+              <sc-for list="{{ calCells }}" as="c" hint-placeholder-count="35">
+                <button onClick="{{ c.pick }}" disabled="{{ c.dis }}" aria-label="{{ c.aria }}" aria-pressed="{{ c.on }}" style="min-height:44px;aspect-ratio:1;max-height:64px;width:100%;border-radius:6px;background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.bd }};font-size:15px;font-weight:{{ c.fw }};cursor:{{ c.cur }};visibility:{{ c.vis }};text-decoration:{{ c.td }};font-variant-numeric:tabular-nums">{{ c.l }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div aria-live="polite" style="margin-top:24px">
+            <sc-if value="{{ hasDate }}" hint-placeholder-val="{{ false }}">
+              <h3 style="margin:0 0 14px;font-size:15px;font-weight:700;text-transform:capitalize">{{ dateLong }}</h3>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px">
+                <sc-for list="{{ times }}" as="tm" hint-placeholder-count="12">
+                  <button onClick="{{ tm.pick }}" aria-pressed="{{ tm.on }}" style="height:48px;border-radius:6px;background:{{ tm.bg }};color:{{ tm.fg }};border:1px solid {{ tm.bd }};font-size:15px;font-weight:700;cursor:pointer;font-variant-numeric:tabular-nums">{{ tm.l }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noDate }}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0;color:#A8ACB2;font-size:15px">{{ t.pick_day }}</p>
+            </sc-if>
+            <sc-if value="{{ hasBkMsg }}" hint-placeholder-val="{{ false }}">
+              <p role="alert" style="margin:16px 0 0;padding:12px 14px;border:1px solid rgba(229,115,115,.5);border-radius:6px;color:#F0A3A3;font-size:15px">{{ bkMsg }}</p>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+          <h2 style="margin:0 0 24px;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(32px,5vw,48px)">{{ t.s4_title }}</h2>
+          <div style="border:1px solid rgba(238,241,245,0.12);border-radius:10px;padding:18px;background:#0E0E0E;display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
+            <sc-for list="{{ summary }}" as="sm" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;gap:16px;font-size:15px"><span style="color:#A8ACB2">{{ sm.k }}</span><span style="text-align:right;font-weight:600">{{ sm.v }}</span></div>
+            </sc-for>
+          </div>
+          <form onSubmit="{{ confirm }}" novalidate="" style="display:flex;flex-direction:column;gap:18px">
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:700">{{ t.f_name }} *
+              <input type="text" autocomplete="name" value="{{ fName }}" onChange="{{ onName }}" aria-invalid="{{ errNameOn }}" style="height:52px;padding:0 14px;background:#0E0E0E;color:#EEF1F5;border:1px solid {{ nameBd }};border-radius:6px;font-size:17px;font-family:inherit">
+            </label>
+            <sc-if value="{{ errNameOn }}" hint-placeholder-val="{{ false }}"><p style="margin:-10px 0 0;color:#F0A3A3;font-size:14px">{{ t.err_name }}</p></sc-if>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:700">{{ t.f_phone }} *
+              <input type="tel" inputmode="tel" autocomplete="tel" placeholder="69x xxx xxxx" value="{{ fPhone }}" onChange="{{ onPhone }}" aria-invalid="{{ errPhoneOn }}" style="height:52px;padding:0 14px;background:#0E0E0E;color:#EEF1F5;border:1px solid {{ phoneBd }};border-radius:6px;font-size:17px;font-family:inherit">
+            </label>
+            <sc-if value="{{ errPhoneOn }}" hint-placeholder-val="{{ false }}"><p style="margin:-10px 0 0;color:#F0A3A3;font-size:14px">{{ t.err_phone }}</p></sc-if>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:700">{{ t.f_email }}
+              <input type="email" autocomplete="email" value="{{ fEmail }}" onChange="{{ onEmail }}" style="height:52px;padding:0 14px;background:#0E0E0E;color:#EEF1F5;border:1px solid {{ emailBd }};border-radius:6px;font-size:17px;font-family:inherit">
+              <span style="font-weight:500;color:#A8ACB2;font-size:13px">{{ t.f_email_hint }}</span>
+            </label>
+            <sc-if value="{{ errEmailOn }}" hint-placeholder-val="{{ false }}"><p style="margin:-10px 0 0;color:#F0A3A3;font-size:14px">{{ t.err_email }}</p></sc-if>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:700">{{ t.f_note }}
+              <textarea rows="3" value="{{ fNote }}" onChange="{{ onNote }}" style="padding:12px 14px;background:#0E0E0E;color:#EEF1F5;border:1px solid rgba(238,241,245,.25);border-radius:6px;font-size:16px;font-family:inherit;resize:vertical"></textarea>
+            </label>
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Website<input type="text" tabindex="-1" autocomplete="off" value="{{ fHp }}" onChange="{{ onHp }}"></label></div>
+            <label style="display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.5;cursor:pointer;min-height:44px">
+              <input type="checkbox" checked="{{ fTerms }}" onChange="{{ onTerms }}" style="flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:#EEF1F5">
+              <span>{{ t.f_terms }} <button type="button" onClick="{{ openTerms }}" style="background:none;border:0;padding:0;color:#EEF1F5;font:inherit;text-decoration:underline;cursor:pointer">{{ t.terms }}</button> · <button type="button" onClick="{{ openPrivacy }}" style="background:none;border:0;padding:0;color:#EEF1F5;font:inherit;text-decoration:underline;cursor:pointer">{{ t.privacy }}</button></span>
+            </label>
+            <sc-if value="{{ errTermsOn }}" hint-placeholder-val="{{ false }}"><p style="margin:-10px 0 0;color:#F0A3A3;font-size:14px">{{ t.err_terms }}</p></sc-if>
+            <div aria-live="assertive">
+              <sc-if value="{{ hasBkMsg }}" hint-placeholder-val="{{ false }}">
+                <p role="alert" style="margin:0;padding:12px 14px;border:1px solid rgba(229,115,115,.5);border-radius:6px;color:#F0A3A3;font-size:15px">{{ bkMsg }}</p>
+              </sc-if>
+            </div>
+          </form>
+        </sc-if>
+
+        <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:32px 0">
+            <div aria-hidden="true" style="width:56px;height:96px;border-radius:3px;background:#EEF1F5;box-shadow:0 0 50px 10px rgba(238,241,245,.3)"></div>
+            <h2 role="status" style="margin:20px 0 0;font-family:'Noto Serif Display',serif;font-weight:900;font-size:clamp(36px,6vw,56px);line-height:1.05">{{ t.done_title }}</h2>
+            <p style="margin:0;color:#A8ACB2;font-size:16px;max-width:40ch">{{ doneSub }}</p>
+          </div>
+          <div style="border:1px solid rgba(238,241,245,0.12);border-radius:10px;padding:18px;background:#0E0E0E;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ summary }}" as="sm" hint-placeholder-count="5">
+              <div style="display:flex;justify-content:space-between;gap:16px;font-size:15px"><span style="color:#A8ACB2">{{ sm.k }}</span><span style="text-align:right;font-weight:600">{{ sm.v }}</span></div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+            <button onClick="{{ downloadIcs }}" style="height:52px;background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:16px;font-weight:700;cursor:pointer">{{ t.add_cal }}</button>
+            <a href="{{ manageHref }}" onClick="{{ noop }}" style="height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-size:16px;font-weight:700;text-decoration:none">{{ t.manage }}</a>
+            <p style="margin:6px 0 0;font-size:14px;color:#A8ACB2;line-height:1.55;text-align:center">{{ t.manage_note }} <a href="{{ phoneHref }}">{{ phone }}</a></p>
+          </div>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ bkNotDone }}" hint-placeholder-val="{{ true }}">
+        <div style="position:sticky;bottom:0;background:#000;border-top:1px solid rgba(238,241,245,0.12);padding:12px 0 calc(12px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px">
+          <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ back }}" style="height:52px;padding:0 18px;background:transparent;color:#EEF1F5;border:1px solid rgba(238,241,245,.35);border-radius:4px;font-size:15px;font-weight:700;cursor:pointer">← {{ t.back }}</button>
+          </sc-if>
+          <div style="flex:1;min-width:0;font-size:14px;color:#A8ACB2;line-height:1.3;overflow:hidden;text-overflow:ellipsis">{{ totalLine }}</div>
+          <button onClick="{{ next }}" disabled="{{ nextDis }}" style="height:52px;padding:0 22px;background:{{ nextBg }};color:{{ nextFg }};border:0;border-radius:4px;font-size:16px;font-weight:700;cursor:{{ nextCur }};white-space:nowrap">{{ nextLabel }}</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroAnimation&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;galleryLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;masonry&quot;,&quot;grid&quot;],&quot;default&quot;:&quot;masonry&quot;,&quot;tsType&quot;:&quot;'masonry'|'grid'&quot;,&quot;section&quot;:&quot;Blog&quot;}}">
+const TZ = 'Europe/Athens';
+// Single source of truth for business data — [ΣΥΜΠΛΗΡΩΣΕ] values are placeholders.
+const DATA = {
+  phone: '+30 2310 000 000', phoneHref: 'tel:+302310000000', // [ΣΥΜΠΛΗΡΩΣΕ]
+  email: 'hello@beyondthechair.gr', // [ΣΥΜΠΛΗΡΩΣΕ]
+  address: { el: 'Βαλαωρίτου 35 Α, Θεσσαλονίκη', en: 'Valaoritou 35A, Thessaloniki' },
+  instagram: 'https://www.instagram.com/beyondthechair_skg/',
+  facebook: 'https://www.facebook.com/profile.php?id=61566480209272',
+  hours: { 0: null, 1: null, 2: [600, 1200], 3: [600, 1200], 4: [600, 1200], 5: [600, 1200], 6: [540, 1020] },
+  closures: ['2026-10-28', '2026-12-25', '2026-12-26', '2027-01-01', '2027-01-06'],
+  rules: { slot: 15, buffer: 5, minNotice: 60, horizon: 30, cancelHours: 2 },
+  services: [
+    { id: 'cut', name: { el: 'Κούρεμα', en: 'Haircut' }, desc: { el: 'Κουβέντα, κούρεμα, λούσιμο, styling.', en: 'Consult, cut, wash, style.' }, dur: 40, price: 15 },
+    { id: 'fade', name: { el: 'Skin fade', en: 'Skin fade' }, desc: { el: 'Καθαρό fade από το δέρμα, με ψαλίδι στο πάνω μέρος.', en: 'Clean fade from the skin, scissor work on top.' }, dur: 45, price: 17 },
+    { id: 'beard', name: { el: 'Γένια', en: 'Beard trim' }, desc: { el: 'Σχήμα, περίγραμμα με ξυράφι, ζεστή πετσέτα.', en: 'Shape, razor line-up, hot towel.' }, dur: 25, price: 10 },
+    { id: 'shave', name: { el: 'Ξύρισμα με ξυράφι', en: 'Hot towel shave' }, desc: { el: 'Ζεστή πετσέτα, ξυράφι, after-shave. Η παλιά τεχνική.', en: 'Hot towel, straight razor, aftershave. The old way.' }, dur: 30, price: 14 },
+    { id: 'combo', name: { el: 'Κούρεμα + γένια', en: 'Cut + beard' }, desc: { el: 'Το πλήρες. Φεύγεις έτοιμος.', en: 'The full thing. Walk out sorted.' }, dur: 60, price: 22 },
+    { id: 'kids', name: { el: 'Παιδικό (έως 12)', en: 'Kids (under 12)' }, desc: { el: 'Με υπομονή και χωρίς βιασύνη.', en: 'Patient, never rushed.' }, dur: 30, price: 12 }
+  ],
+  barbers: [
+    { id: 'aris', name: { el: 'Άρης', en: 'Aris' }, acc: 'Άρη', role: { el: 'Fades & κλασικά', en: 'Fades & classics' }, bio: { el: 'Ακριβής στις γραμμές, ήρεμος στην κουβέντα.', en: 'Precise lines, easy conversation.' }, ig: null,
+      hours: { 2: [600, 1080], 3: [600, 1080], 4: [720, 1200], 5: [720, 1200], 6: [540, 1020] }, breaks: [[840, 870]], off: [] },
+    { id: 'stelios', name: { el: 'Στέλιος', en: 'Stelios' }, acc: 'Στέλιο', role: { el: 'Ξύρισμα & γενειάδα', en: 'Shaves & beards' }, bio: { el: 'Ζεστή πετσέτα, κοφτερό ξυράφι, σταθερό χέρι.', en: 'Hot towel, sharp razor, steady hand.' }, ig: null,
+      hours: { 2: [720, 1200], 3: [720, 1200], 4: [600, 1080], 5: [600, 1080], 6: [540, 900] }, breaks: [[900, 930]], off: [] },
+    { id: 'marios', name: { el: 'Μάριος', en: 'Marios' }, acc: 'Μάριο', role: { el: 'Μακριά μαλλιά & ψαλίδι', en: 'Longer hair & scissors' }, bio: { el: 'Για όσους θέλουν κάτι πέρα από μηχανή.', en: 'For when you want more than clippers.' }, ig: null,
+      hours: { 3: [600, 1200], 4: [600, 1200], 5: [600, 1200], 6: [540, 1020] }, breaks: [[810, 840]], off: ['2026-11-04', '2026-11-05'] }
+  ]
+};
+const GAL = ['3/4', '1/1', '4/5', '3/4', '4/3', '3/4', '1/1', '4/5', '3/4', '4/3', '1/1', '3/4'];
+const T = {
+  el: {
+    other_lang: 'EN', lang_aria: 'Switch to English', nav_services: 'Υπηρεσίες', nav_barbers: 'Ομάδα', nav_gallery: 'Blog', nav_hours: 'Ωράριο', nav_contact: 'Επικοινωνία',
+    book: 'Κλείσε ραντεβού', book_mini: 'Ραντεβού', book_short: 'Κλείσε', hero_lead: 'Κουρείο στο κέντρο της Θεσσαλονίκης.', hero_cta2: 'Δες τις υπηρεσίες',
+    open_now: 'Ανοιχτά τώρα · έως', closed_now: 'Κλειστά τώρα', closed_today: 'Κλειστά σήμερα', opens: 'Ανοίγουμε', today: 'σήμερα', tomorrow: 'αύριο', at: 'στις',
+    about_kicker: 'Η φιλοσοφία', about_a: 'Πέρα', about_em: 'από', about_b: 'την καρέκλα.',
+    about_p1: 'Ένα κούρεμα κρατάει μισή ώρα. Το πώς φεύγεις κρατάει περισσότερο. Δουλεύουμε μόνο με ραντεβού, ώστε ο χρόνος στην καρέκλα να είναι μόνο δικός σου.',
+    about_p2: 'Ακούμε πρώτα, μετά κόβουμε. Κάθε κούρεμα ξεκινά με κουβέντα για το τι θέλεις και τι σου ταιριάζει, και τελειώνει όταν είσαι σίγουρος.',
+    about_p3: 'Λίγες καρέκλες, καλό φως, ήσυχη μουσική. Βαλαωρίτου 35 Α, στο κέντρο της πόλης.',
+    points: [['Μόνο με ραντεβού', 'Χωρίς αναμονή. Έρχεσαι, κάθεσαι.'], ['Ξύρισμα με ξυράφι', 'Ζεστή πετσέτα και παραδοσιακή τεχνική.'], ['Premium προϊόντα', 'Επιλεγμένα για κάθε τύπο μαλλιού και δέρματος.']],
+    services_kicker: 'Υπηρεσίες & τιμές', services_title: 'Υπηρεσίες', services_note: 'Οι τιμές περιλαμβάνουν ΦΠΑ. Διάλεξε υπηρεσία και κλείσε κατευθείαν.', min: 'λεπτά',
+    barbers_kicker: 'Η ομάδα', barbers_title: 'Η ομάδα', book_with: 'Κλείσε με τον', photo_ph: 'Φωτογραφία',
+    gallery_kicker: 'Δουλειές', gallery_title: 'Blog', gallery_sub: 'Νέα, δουλειές και στιγμές από το κουρείο. Για όλα τα τελευταία, ακολούθησέ μας στο Instagram.', hours_title: 'Ωράριο', marquee: ['Κούρεμα', 'Γένια', 'Ξύρισμα με ξυράφι', 'Skin fade', 'Ζεστή πετσέτα', 'Παιδικό κούρεμα', 'Styling'], gallery_more: 'Περισσότερα στο Instagram', gallery_ph: 'Φωτογραφία',
+    contact_kicker: 'Επικοινωνία', contact_title: 'Επικοινωνία', address_l: 'Διεύθυνση', phone_l: 'Τηλέφωνο', hours_l: 'Ωράριο', closed: 'Κλειστά', today_tag: 'Σήμερα', holiday_tag: 'Αργία',
+    parking: 'Πρόσβαση & στάθμευση: [ΣΥΜΠΛΗΡΩΣΕ]', map_consent: 'Ο χάρτης φορτώνεται από την Google και χρησιμοποιεί cookies. Φορτώνει μόνο αν το επιλέξεις.', map_load: 'Φόρτωσε τον χάρτη', directions: 'Οδηγίες',
+    footer_line: 'Ανδρικό κουρείο στη Θεσσαλονίκη. Μόνο με ραντεβού.', hours_short1: 'Τρί–Παρ 10:00–20:00', hours_short2: 'Σάβ 09:00–17:00', hours_short3: 'Κυρ–Δευ κλειστά',
+    legal_l: 'Νομικά', privacy: 'Πολιτική απορρήτου', terms: 'Όροι κράτησης', cookies: 'Cookies', call: 'Τηλεφώνησε',
+    cookie_text: 'Χρησιμοποιούμε μόνο τα απαραίτητα cookies. Με την αποδοχή φορτώνουμε επίσης τον χάρτη Google και ανώνυμα στατιστικά.', accept: 'Αποδοχή', reject: 'Απόρριψη', close: 'Κλείσιμο',
+    days: ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'], wd: ['Δε', 'Τρ', 'Τε', 'Πε', 'Πα', 'Σα', 'Κυ'], locale: 'el-GR',
+    bk_title: 'Κράτηση', steps: ['Υπηρεσία', 'Barber', 'Ώρα', 'Στοιχεία'],
+    s1_title: 'Τι θα κάνουμε;', s1_sub: 'Διάλεξε μία ή περισσότερες υπηρεσίες.', s2_title: 'Με ποιον;', s2_sub: 'Διάλεξε barber ή άφησέ το σε εμάς.',
+    any: 'Οποιοσδήποτε διαθέσιμος', any_sub: 'Περισσότερες ώρες, σε βάζουμε εμείς.', s3_title: 'Πότε;', s3_sub: 'Ώρες Ελλάδας. Εμφανίζονται μόνο οι διαθέσιμες μέρες.', pick_day: 'Διάλεξε μέρα για να δεις τις ώρες.',
+    s4_title: 'Τα στοιχεία σου', f_name: 'Όνομα', f_phone: 'Κινητό', f_email: 'Email (προαιρετικό)', f_email_hint: 'Για επιβεβαίωση και υπενθύμιση 24 ώρες πριν.', f_note: 'Σημείωση (προαιρετικό)', f_terms: 'Συμφωνώ με τους',
+    err_name: 'Γράψε το όνομά σου.', err_phone: 'Έλεγξε το κινητό (π.χ. 69x xxx xxxx ή +44…).', err_email: 'Το email δεν φαίνεται σωστό.', err_terms: 'Χρειάζεται να αποδεχτείς τους όρους.',
+    taken: 'Αυτή η ώρα μόλις κλείστηκε από κάποιον άλλο. Διάλεξε μία από τις ανανεωμένες ώρες.',
+    back: 'Πίσω', next: 'Συνέχεια', confirm: 'Επιβεβαίωση', sum_services: 'Υπηρεσίες', sum_barber: 'Barber', sum_when: 'Πότε', sum_total: 'Σύνολο', sum_ref: 'Κωδικός',
+    done_title: 'Τα λέμε σύντομα.', done_sub_mail: 'Στείλαμε επιβεβαίωση στο', done_sub: 'Κράτα τον κωδικό σου. Θα σε περιμένουμε.', add_cal: 'Προσθήκη στο ημερολόγιο', manage: 'Αλλαγή ή ακύρωση',
+    manage_note: 'Αλλαγές και ακυρώσεις έως 2 ώρες πριν. Μετά, πάρε τηλέφωνο:', services_n: 'υπηρεσίες', service_1: 'υπηρεσία', pick_service: 'Διάλεξε υπηρεσία',
+    legal: {
+      privacy: ['Πολιτική απορρήτου (draft)', ['Υπεύθυνος επεξεργασίας: [ΣΥΜΠΛΗΡΩΣΕ: επωνυμία, ΑΦΜ, διεύθυνση].', 'Συλλέγουμε όνομα, κινητό και, προαιρετικά, email, μόνο για τη διαχείριση του ραντεβού σου (επιβεβαίωση, υπενθύμιση, επικοινωνία για αλλαγές).', 'Τα στοιχεία διαγράφονται ή ανωνυμοποιούνται 12 μήνες μετά το τελευταίο ραντεβού. Εκτελούντες την επεξεργασία: πάροχος φιλοξενίας και πάροχος email [ΣΥΜΠΛΗΡΩΣΕ].', 'Έχεις δικαίωμα πρόσβασης, διόρθωσης, διαγραφής και εναντίωσης. Επικοινώνησε στο email του καταστήματος. Μπορείς επίσης να απευθυνθείς στην Αρχή Προστασίας Δεδομένων.']],
+      terms: ['Όροι κράτησης (draft)', ['Αλλαγή ή ακύρωση γίνεται από το link της επιβεβαίωσης έως 2 ώρες πριν από το ραντεβού. Μετά, τηλεφωνικά.', 'Καθυστέρηση πάνω από 10 λεπτά μπορεί να σημαίνει συντομότερη υπηρεσία ή νέο ραντεβού. [ΣΥΜΠΛΗΡΩΣΕ]', 'Μη εμφάνιση χωρίς ειδοποίηση: [ΣΥΜΠΛΗΡΩΣΕ πολιτική].', 'Ένα τηλέφωνο μπορεί να έχει έως 3 ενεργές μελλοντικές κρατήσεις.']],
+      cookies: ['Cookies', ['Εξ ορισμού χρησιμοποιούμε μόνο τα απαραίτητα για τη λειτουργία της σελίδας (π.χ. επιλογή γλώσσας).', 'Ο χάρτης Google φορτώνει μόνο με τη συγκατάθεσή σου. Τα στατιστικά επισκεψιμότητας είναι ανώνυμα και χωρίς cookies.', 'Μπορείς να αλλάξεις την επιλογή σου οποιαδήποτε στιγμή διαγράφοντας τα δεδομένα του ιστότοπου από τον browser.']]
+    }
+  },
+  en: {
+    other_lang: 'EL', lang_aria: 'Αλλαγή σε Ελληνικά', nav_services: 'Services', nav_barbers: 'Barbers', nav_gallery: 'Gallery', nav_contact: 'Contact',
+    book: 'Book now', book_mini: 'Book', book_short: 'Book', hero_sub: 'Cuts, shaves, care. In Thessaloniki.', hero_cta2: 'See services',
+    open_now: 'Open now · until', closed_now: 'Closed now', closed_today: 'Closed today', opens: 'Opens', today: 'today', tomorrow: 'tomorrow', at: 'at',
+    about_kicker: 'The idea', about_a: 'Beyond', about_em: 'the', about_b: 'chair.',
+    about_p1: 'A haircut takes half an hour. How you walk out lasts longer. We work by appointment only, so your time in the chair is yours alone.',
+    about_p2: 'We listen first, then cut. Every cut starts with a chat about what you want and what suits you, and ends when you’re sure.',
+    about_p3: 'A few chairs, good light, quiet music. Valaoritou 35A, in the city centre.',
+    points: [['Appointment only', 'No waiting. Walk in, sit down.'], ['Straight-razor shaves', 'Hot towel, traditional technique.'], ['Premium products', 'Chosen for every hair and skin type.']],
+    services_kicker: 'Services & prices', services_title: 'The menu.', services_note: 'Prices include VAT. Pick a service and book straight away.', min: 'min',
+    barbers_kicker: 'The team', barbers_title: 'The barbers.', book_with: 'Book with', photo_ph: 'Photo',
+    gallery_kicker: 'Work', gallery_title: 'From the chair.', gallery_more: 'More on Instagram', gallery_ph: 'Photo',
+    contact_kicker: 'Contact', contact_title: 'Find us.', address_l: 'Address', phone_l: 'Phone', hours_l: 'Hours', closed: 'Closed', today_tag: 'Today', holiday_tag: 'Holiday',
+    parking: 'Access & parking: [TO FILL]', map_consent: 'The map loads from Google and uses cookies. It only loads if you choose to.', map_load: 'Load map', directions: 'Directions',
+    footer_line: 'Men’s barber shop in Thessaloniki. Appointment only.', hours_short1: 'Tue–Fri 10:00–20:00', hours_short2: 'Sat 09:00–17:00', hours_short3: 'Sun–Mon closed',
+    legal_l: 'Legal', privacy: 'Privacy policy', terms: 'Booking terms', cookies: 'Cookies', call: 'Call us',
+    cookie_text: 'We only use essential cookies. If you accept, we also load the Google map and anonymous statistics.', accept: 'Accept', reject: 'Reject', close: 'Close',
+    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], wd: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'], locale: 'en-GB',
+    bk_title: 'Booking', steps: ['Service', 'Barber', 'Time', 'Details'],
+    s1_title: 'What are we doing?', s1_sub: 'Pick one or more services.', s2_title: 'With whom?', s2_sub: 'Pick a barber or leave it to us.',
+    any: 'Anyone available', any_sub: 'More times — we’ll assign you.', s3_title: 'When?', s3_sub: 'Greek time. Only days with availability are shown.', pick_day: 'Pick a day to see times.',
+    s4_title: 'Your details', f_name: 'Name', f_phone: 'Mobile', f_email: 'Email (optional)', f_email_hint: 'For confirmation and a reminder 24 hours before.', f_note: 'Note (optional)', f_terms: 'I agree to the',
+    err_name: 'Please enter your name.', err_phone: 'Check your mobile number (e.g. 69x xxx xxxx or +44…).', err_email: 'That email doesn’t look right.', err_terms: 'Please accept the terms.',
+    taken: 'Someone just took that time. Pick one of the updated times.',
+    back: 'Back', next: 'Continue', confirm: 'Confirm', sum_services: 'Services', sum_barber: 'Barber', sum_when: 'When', sum_total: 'Total', sum_ref: 'Reference',
+    done_title: 'See you soon.', done_sub_mail: 'We sent a confirmation to', done_sub: 'Keep your reference. We’ll be expecting you.', add_cal: 'Add to calendar', manage: 'Change or cancel',
+    manage_note: 'Changes and cancellations up to 2 hours before. After that, call us:', services_n: 'services', service_1: 'service', pick_service: 'Pick a service',
+    legal: {
+      privacy: ['Privacy policy (draft)', ['Data controller: [TO FILL: legal name, VAT no., address].', 'We collect your name, mobile and, optionally, email, only to manage your appointment (confirmation, reminder, contact about changes).', 'Data is deleted or anonymised 12 months after your last appointment. Processors: hosting provider and email provider [TO FILL].', 'You have the right to access, correct, delete and object. Contact the shop by email. You may also contact the Hellenic Data Protection Authority.']],
+      terms: ['Booking terms (draft)', ['Change or cancel from the link in your confirmation up to 2 hours before. After that, by phone.', 'Arriving more than 10 minutes late may mean a shorter service or a new appointment. [TO FILL]', 'No-shows without notice: [TO FILL policy].', 'One phone number can hold up to 3 active future bookings.']],
+      cookies: ['Cookies', ['By default we only use what the site needs to work (e.g. language choice).', 'The Google map only loads with your consent. Visitor statistics are anonymous and cookie-free.', 'You can change your choice any time by clearing this site’s data in your browser.']]
+    }
+  }
+};
+const pad = n => String(n).padStart(2, '0');
+const fmt = m => pad(Math.floor(m / 60)) + ':' + pad(m % 60);
+const wdOf = k => new Date(k + 'T12:00:00Z').getUTCDay();
+const addDays = (k, n) => { const d = new Date(k + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+const hash = s => { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+const rng = seed => { let s = seed || 1; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; };
+const SEL = { bg: '#EEF1F5', fg: '#000', bd: '#EEF1F5' }, UNS = { bg: '#0E0E0E', fg: '#EEF1F5', bd: 'rgba(238,241,245,.18)' };
+
+class Component extends DCLogic {
+  state = { lang: null, w: 1200, scrolled: false, pastHero: false, menu: false, bk: null, lb: -1, mapOn: false, consent: null, legal: null, lit: false, instant: false, booked: [] };
+
+  componentDidMount() {
+    let consent = null, lang = null;
+    try { consent = localStorage.getItem('btc_consent'); lang = localStorage.getItem('btc_lang'); } catch (e) {}
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const instant = reduce || this.props.heroAnimation === false;
+    this.setState({ consent, lang, instant, lit: instant, w: window.innerWidth });
+    if (!instant) setTimeout(() => this.setState({ lit: true }), 60);
+    this.onScroll = () => { const y = window.scrollY; const s = y > 12, p = y > window.innerHeight * 0.75; if (s !== this.state.scrolled || p !== this.state.pastHero) this.setState({ scrolled: s, pastHero: p }); };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    this.onKey = e => {
+      if (this.state.lb >= 0) { if (e.key === 'Escape') this.setState({ lb: -1 }); if (e.key === 'ArrowRight') this.lbStep(1); if (e.key === 'ArrowLeft') this.lbStep(-1); return; }
+      if (e.key === 'Escape') { if (this.state.legal) this.setState({ legal: null }); else if (this.state.bk) this.closeBook(); else if (this.state.menu) this.setState({ menu: false }); }
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('keydown', this.onKey);
+    this.onScroll();
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); }
+  componentDidUpdate() {
+    const lock = !!(this.state.bk || this.state.menu || this.state.lb >= 0 || this.state.legal);
+    document.body.style.overflow = lock ? 'hidden' : '';
+    document.documentElement.lang = this.lang();
+  }
+  lang() { return 'el'; }
+  athensNow() {
+    const p = {}; new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).forEach(x => p[x.type] = x.value);
+    return { key: `${p.year}-${p.month}-${p.day}`, min: (+p.hour % 24) * 60 + +p.minute };
+  }
+  shopHours(k) { return DATA.closures.includes(k) ? null : DATA.hours[wdOf(k)]; }
+  barberWin(b, k) {
+    const sh = this.shopHours(k), bh = b.hours[wdOf(k)];
+    if (!sh || !bh || b.off.includes(k)) return null;
+    return [Math.max(sh[0], bh[0]), Math.min(sh[1], bh[1])];
+  }
+  busy(b, k, win) {
+    const r = rng(hash(b.id + k)), n = 3 + Math.floor(r() * 5), out = b.breaks.slice();
+    for (let i = 0; i < n; i++) { const s = win[0] + Math.floor(r() * ((win[1] - win[0]) / 15)) * 15; out.push([s, s + [30, 40, 45, 60][Math.floor(r() * 4)]]); }
+    this.state.booked.forEach(x => { if (x.barber === b.id && x.key === k) out.push([x.s, x.e]); });
+    return out;
+  }
+  slots(b, k, dur, now) {
+    const win = this.barberWin(b, k); if (!win) return [];
+    const { slot, buffer, minNotice } = DATA.rules, busy = this.busy(b, k, win), res = [];
+    for (let t = win[0]; t + dur <= win[1]; t += slot) {
+      if (k === now.key && t < now.min + minNotice) continue;
+      if (!busy.some(([a, c]) => t < c + buffer && t + dur + buffer > a)) res.push(t);
+    }
+    return res;
+  }
+  slotMap(barberSel, k, dur, now) {
+    const map = new Map(), list = barberSel === 'any' ? DATA.barbers : DATA.barbers.filter(b => b.id === barberSel);
+    list.forEach(b => this.slots(b, k, dur, now).forEach(t => { if (!map.has(t)) map.set(t, b.id); }));
+    return map;
+  }
+  openBook(o = {}) {
+    const now = this.athensNow();
+    this.setState({ menu: false, bk: { step: o.service ? 2 : 1, sel: o.service ? [o.service] : [], barber: o.barber || null, date: null, time: null, calM: now.key.slice(0, 7), name: '', phone: '', email: '', note: '', terms: false, hp: '', err: {}, msg: '', done: null } });
+  }
+  closeBook() { this.setState({ bk: null }); }
+  upd(p) { this.setState(s => ({ bk: { ...s.bk, ...p } })); }
+  lbStep(d) { this.setState(s => ({ lb: (s.lb + d + GAL.length) % GAL.length })); }
+  setConsent(v) { try { localStorage.setItem('btc_consent', v); } catch (e) {} this.setState({ consent: v }); }
+  validate(bk) {
+    const err = {}, ph = bk.phone.replace(/[\s\-().]/g, '');
+    if (bk.name.trim().length < 2 || bk.name.length > 80) err.name = 1;
+    if (!(/^(\+30|0030)?69\d{8}$/.test(ph) || /^\+[1-9]\d{7,14}$/.test(ph))) err.phone = 1;
+    if (bk.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(bk.email)) err.email = 1;
+    if (!bk.terms) err.terms = 1;
+    return err;
+  }
+  confirm(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const bk = this.state.bk, err = this.validate(bk);
+    if (Object.keys(err).length) return this.upd({ err, msg: '' });
+    if (bk.hp) return;
+    const now = this.athensNow(), dur = this.dur(bk), map = this.slotMap(bk.barber, bk.date, dur, now);
+    if (!map.has(bk.time)) return this.upd({ step: 3, time: null, msg: T[this.lang()].taken });
+    const barber = map.get(bk.time), arr = new Uint8Array(16); crypto.getRandomValues(arr);
+    const token = Array.from(arr, x => x.toString(16).padStart(2, '0')).join('');
+    this.setState(s => ({ booked: [...s.booked, { barber, key: bk.date, s: bk.time, e: bk.time + dur }], bk: { ...bk, err: {}, msg: '', done: { barber, token, ref: token.slice(0, 6).toUpperCase() } } }));
+  }
+  dur(bk) { return DATA.services.filter(s => bk.sel.includes(s.id)).reduce((a, s) => a + s.dur, 0); }
+  downloadIcs() {
+    const bk = this.state.bk, b = DATA.barbers.find(x => x.id === bk.done.barber), lang = this.lang();
+    const d = bk.date.replace(/-/g, ''), st = d + 'T' + fmt(bk.time).replace(':', '') + '00', en = d + 'T' + fmt(bk.time + this.dur(bk)).replace(':', '') + '00';
+    const names = DATA.services.filter(s => bk.sel.includes(s.id)).map(s => s.name[lang]).join(' + ');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Beyond the Chair//Booking//EL', 'BEGIN:VEVENT', 'UID:' + bk.done.token + '@beyondthechair.gr', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z',
+      'DTSTART;TZID=Europe/Athens:' + st, 'DTEND;TZID=Europe/Athens:' + en, 'SUMMARY:Beyond the Chair · ' + names, 'DESCRIPTION:' + b.name[lang] + ' · ' + bk.done.ref, 'LOCATION:' + DATA.address[lang], 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'beyond-the-chair.ics'; a.click();
+  }
+
+  marquee(words) {
+    const e = React.createElement, run = k => e('div', { key: k, style: { display: 'flex', alignItems: 'center', flex: 'none' } }, words.map((w, i) => e('span', { key: i, style: { display: 'flex', alignItems: 'center', gap: 'clamp(28px,3vw,48px)', paddingRight: 'clamp(28px,3vw,48px)', fontFamily: "'Noto Serif Display',serif", fontWeight: 800, fontSize: 'clamp(26px,3.4vw,44px)', lineHeight: 1, whiteSpace: 'nowrap', color: i % 2 ? '#A8ACB2' : '#EEF1F5' } }, w, e('span', { style: { width: 8, height: 8, borderRadius: '50%', background: '#EEF1F5', opacity: .5 } })) ));
+    return e('div', { 'data-marquee': '', style: { display: 'flex', width: 'max-content', animation: 'btc-marquee 38s linear infinite', willChange: 'transform' } }, [run(0), run(1), run(2), run(3)]);
+  }
+  renderVals() {
+    const lang = this.lang(), t = T[lang], L = o => o[lang], st = this.state, now = this.athensNow();
+    const isDesk = st.w >= 960, isMob = !isDesk;
+    const dlong = (k, o) => new Intl.DateTimeFormat(t.locale, { timeZone: 'UTC', ...o }).format(new Date(k + 'T12:00:00Z'));
+
+    // today status
+    let statusLine, open = false; const th = this.shopHours(now.key);
+    if (th && now.min >= th[0] && now.min < th[1]) { open = true; statusLine = `${t.open_now} ${fmt(th[1])}`; }
+    else {
+      let nx = null; for (let i = 0; i < 14 && !nx; i++) { const k = addDays(now.key, i), h = this.shopHours(k); if (h && (i > 0 || now.min < h[0])) nx = { i, k, m: h[0] }; }
+      const when = nx.i === 0 ? t.today : nx.i === 1 ? t.tomorrow : t.days[wdOf(nx.k)];
+      statusLine = `${th ? t.closed_now : t.closed_today} · ${t.opens} ${when} ${t.at} ${fmt(nx.m)}`;
+    }
+    const todayWd = wdOf(now.key), holiday = DATA.closures.includes(now.key);
+    const hoursRows = [1, 2, 3, 4, 5, 6, 0].map(i => { const h = DATA.hours[i], isT = i === todayWd; return { day: t.days[i], val: h && !(isT && holiday) ? `${fmt(h[0])}–${fmt(h[1])}` : t.closed, tag: isT ? (holiday ? t.today_tag + ' · ' + t.holiday_tag : t.today_tag) : '', bg: isT ? 'rgba(238,241,245,.07)' : 'transparent', fw: isT ? 700 : 400, fg: h ? '#EEF1F5' : '#A8ACB2' }; });
+
+    const lit = st.lit, tr = st.instant ? 'none' : null;
+    const out = {
+      t, isDesk, isMob, year: new Date().getFullYear(),
+      headerBg: st.scrolled || st.menu ? '#000' : 'transparent', headerLine: st.scrolled && !st.menu ? 'rgba(238,241,245,0.12)' : 'transparent',
+      headerBookLabel: st.w < 400 ? t.book_mini : t.book,
+      menuOpen: st.menu && isMob, burgerTop: st.menu ? 'translateY(4px) rotate(45deg)' : 'none', burgerBot: st.menu ? 'translateY(-4px) rotate(-45deg)' : 'none',
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
+      toggleLang: () => { const n = lang === 'el' ? 'en' : 'el'; try { localStorage.setItem('btc_lang', n); } catch (e) {} this.setState({ lang: n }); },
+      openBook: () => this.openBook(), closeBook: () => this.closeBook(),
+      heroDoorOp: lit ? 1 : 0, heroScale: lit ? 1 : 0.985,
+      heroWide: st.w >= 1024, heroDir: st.w >= 1024 ? 'row' : 'column-reverse', heroTextFlex: st.w >= 1024 ? '1 1 300px' : 'none', heroImgFlex: st.w >= 1024 ? '2.2 1 380px' : 'none',
+      heroTextW: st.w >= 1024 ? 'auto' : '100%', heroAlign: st.w >= 1024 ? 'flex-start' : 'center', heroImgMaxH: st.w >= 1024 ? '62svh' : 'min(62svh, calc(100svh - 230px))', heroTextOp: lit ? 1 : 0, heroTextY: lit ? '0' : '16px',
+      heroTrA: tr || 'opacity 1s ease-out, transform 1.2s ease-out', heroTrC: tr || 'opacity .6s ease-out .8s, transform .6s ease-out .8s',
+      statusLine, statusDot: open ? '#EEF1F5' : '#5A5E64',
+      marquee: this.marquee(t.marquee),
+      services: DATA.services.map((s, i) => ({ dir: i % 2 ? 'row-reverse' : 'row', slot: 'service-' + s.id, ph: L(s.name), name: L(s.name), desc: L(s.desc), dur: `${s.dur} ${t.min}`, price: `${s.price}€`, aria: `${t.book_short}: ${L(s.name)}`, book: () => this.openBook({ service: s.id }) })),
+      barbers: DATA.barbers.map(b => ({ slot: 'barber-' + b.id, ph: `${t.photo_ph} · ${L(b.name)}`, name: L(b.name), role: L(b.role), bio: L(b.bio), ig: b.ig || '', hasIg: !!b.ig, bookLabel: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, btn: st.w >= 760 ? `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}` : t.book_short, aria: `${t.book_with} ${lang === 'el' ? b.acc : L(b.name)}`, book: () => this.openBook({ barber: b.id }) })),
+      masonry: (this.props.galleryLayout ?? 'masonry') === 'masonry', gridLayout: this.props.galleryLayout === 'grid',
+      gallery: GAL.map((r, i) => ({ slot: 'gallery-' + (i + 1), ratio: r, ph: `${t.gallery_ph} ${i + 1}`, aria: `${t.gallery_ph} ${i + 1} / ${GAL.length}`, open: () => this.setState({ lb: i }) })),
+      instagram: DATA.instagram, facebook: DATA.facebook, phone: DATA.phone, phoneHref: DATA.phoneHref, email: DATA.email, mailHref: 'mailto:' + DATA.email, address: L(DATA.address),
+      gmapsDir: 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent('Βαλαωρίτου 35, Θεσσαλονίκη'), appleDir: 'https://maps.apple.com/?daddr=' + encodeURIComponent('Valaoritou 35, Thessaloniki'),
+      hoursRows, mapShown: st.mapOn || st.consent === 'all', mapHidden: !(st.mapOn || st.consent === 'all'), loadMap: () => this.setState({ mapOn: true }),
+      showBar: isMob && st.pastHero && !st.bk && !st.menu, footerPadBottom: isMob ? '120px' : '48px',
+      showCookie: st.consent === null && !st.bk, cookieBottom: isMob && st.pastHero ? 'calc(88px + env(safe-area-inset-bottom))' : '16px',
+      acceptCookies: () => this.setConsent('all'), rejectCookies: () => this.setConsent('essential'),
+      lbOpen: st.lb >= 0, lbSlot: 'gallery-' + (st.lb + 1), lbRatio: GAL[Math.max(st.lb, 0)], lbLabel: `${t.gallery_ph} ${st.lb + 1}`, lbCount: `${st.lb + 1} / ${GAL.length}`,
+      lbClose: () => this.setState({ lb: -1 }), lbPrev: () => this.lbStep(-1), lbNext: () => this.lbStep(1),
+      legalOpen: !!st.legal, legalTitle: st.legal ? t.legal[st.legal][0] : '', legalParas: st.legal ? t.legal[st.legal][1].map(text => ({ text })) : [],
+      openPrivacy: () => this.setState({ legal: 'privacy' }), openTerms: () => this.setState({ legal: 'terms' }), openCookies: () => this.setState({ legal: 'cookies' }), closeLegal: () => this.setState({ legal: null }),
+      noop: e => e.preventDefault(),
+      bkOpen: !!st.bk
+    };
+    const bk = st.bk; if (!bk) return out;
+
+    const dur = this.dur(bk), price = DATA.services.filter(s => bk.sel.includes(s.id)).reduce((a, s) => a + s.price, 0);
+    const done = bk.done, step = done ? 5 : bk.step;
+    const availDays = new Set(); let map = null;
+    if (step === 3 && bk.barber && dur) {
+      for (let i = 0; i < DATA.rules.horizon; i++) { const k = addDays(now.key, i); if (this.slotMap(bk.barber, k, dur, now).size) availDays.add(k); }
+      if (bk.date) map = this.slotMap(bk.barber, bk.date, dur, now);
+    }
+    // calendar
+    const [cy, cm] = bk.calM.split('-').map(Number), first = `${bk.calM}-01`, offs = (wdOf(first) + 6) % 7, dim = new Date(Date.UTC(cy, cm, 0)).getUTCDate();
+    const cells = [];
+    for (let i = 0; i < offs; i++) cells.push({ l: '', dis: true, vis: 'hidden', ...UNS, fw: 400, cur: 'default', td: 'none', on: false, aria: '', pick: null });
+    for (let d = 1; d <= dim; d++) {
+      const k = `${bk.calM}-${pad(d)}`, av = availDays.has(k), on = bk.date === k, c = on ? SEL : av ? UNS : { bg: 'transparent', fg: '#5A5E64', bd: 'transparent' };
+      cells.push({ l: d, dis: !av, vis: 'visible', ...c, fw: av ? 700 : 400, cur: av ? 'pointer' : 'default', td: av || k < now.key ? 'none' : 'none', on, aria: dlong(k, { weekday: 'long', day: 'numeric', month: 'long' }), pick: () => this.upd({ date: k, time: null, msg: bk.msg && bk.date === k ? bk.msg : '' }) });
+    }
+    const horizonEnd = addDays(now.key, DATA.rules.horizon - 1), shiftM = n => { const d = new Date(Date.UTC(cy, cm - 1 + n, 1)); return d.toISOString().slice(0, 7); };
+    const prevDis = bk.calM <= now.key.slice(0, 7), nextDis = bk.calM >= horizonEnd.slice(0, 7);
+    const bName = id => { const b = DATA.barbers.find(x => x.id === id); return b ? L(b.name) : t.any; };
+    const svcNames = DATA.services.filter(s => bk.sel.includes(s.id)).map(s => L(s.name)).join(' + ');
+    const when = bk.date && bk.time != null ? `${dlong(bk.date, { weekday: 'short', day: 'numeric', month: 'long' })} · ${fmt(bk.time)}` : '';
+    const summary = [{ k: t.sum_services, v: svcNames }, { k: t.sum_barber, v: done ? bName(done.barber) : bk.barber === 'any' ? t.any : bName(bk.barber) }, { k: t.sum_when, v: when }, { k: t.sum_total, v: `${dur} ${t.min} · ${price}€` }];
+    if (done) summary.push({ k: t.sum_ref, v: done.ref });
+    const canNext = step === 1 ? bk.sel.length > 0 : step === 2 ? !!bk.barber : step === 3 ? bk.time != null : true;
+    const err = bk.err || {}, red = 'rgba(229,115,115,.8)', norm = 'rgba(238,241,245,.25)';
+    const setF = f => e => { const v = e.target.type === 'checkbox' ? e.target.checked : e.target.value; this.setState(s => ({ bk: { ...s.bk, [f]: v, err: { ...s.bk.err, [f]: 0 } } })); };
+
+    return Object.assign(out, {
+      bkNotDone: !done, isDone: !!done, isStep1: step === 1, isStep2: step === 2, isStep3: step === 3, isStep4: step === 4,
+      steps: t.steps.map((l, i) => ({ label: l, bar: i + 1 <= step ? '#EEF1F5' : 'rgba(238,241,245,.15)', fg: i + 1 === step ? '#EEF1F5' : '#A8ACB2', current: i + 1 === step ? 'step' : undefined })),
+      bkServices: DATA.services.map(s => { const on = bk.sel.includes(s.id); return { ...(on ? SEL : UNS), on, mark: on ? '✓' : '', name: L(s.name), dur: `${s.dur} ${t.min}`, price: `${s.price}€`, pick: () => this.upd({ sel: on ? bk.sel.filter(x => x !== s.id) : [...bk.sel, s.id], time: null }) }; }),
+      bkBarbers: [{ id: 'any', name: t.any, sub: t.any_sub, initial: '∗' }, ...DATA.barbers.map(b => ({ id: b.id, name: L(b.name), sub: '', initial: L(b.name)[0] }))].map(o => { const on = bk.barber === o.id; return { ...o, ...(on ? SEL : UNS), on, pick: () => this.upd({ barber: o.id, time: null }) }; }),
+      calLabel: dlong(first, { month: 'long', year: 'numeric' }), calWd: t.wd.map(l => ({ l })), calCells: cells,
+      calPrev: () => this.upd({ calM: shiftM(-1) }), calNext: () => this.upd({ calM: shiftM(1) }), calPrevDis: prevDis, calNextDis: nextDis, calPrevOp: prevDis ? 0.3 : 1, calNextOp: nextDis ? 0.3 : 1,
+      hasDate: !!(bk.date && map), noDate: !bk.date, dateLong: bk.date ? dlong(bk.date, { weekday: 'long', day: 'numeric', month: 'long' }) : '',
+      times: map ? [...map.keys()].sort((a, b) => a - b).map(m => { const on = bk.time === m; return { l: fmt(m), on, ...(on ? SEL : UNS), pick: () => this.upd({ time: m, msg: '' }) }; }) : [],
+      hasBkMsg: !!bk.msg, bkMsg: bk.msg, summary,
+      fName: bk.name, fPhone: bk.phone, fEmail: bk.email, fNote: bk.note, fTerms: bk.terms, fHp: bk.hp,
+      onName: setF('name'), onPhone: setF('phone'), onEmail: setF('email'), onNote: setF('note'), onTerms: setF('terms'), onHp: setF('hp'),
+      errNameOn: !!err.name, errPhoneOn: !!err.phone, errEmailOn: !!err.email, errTermsOn: !!err.terms,
+      nameBd: err.name ? red : norm, phoneBd: err.phone ? red : norm, emailBd: err.email ? red : norm,
+      canBack: step > 1, back: () => this.upd({ step: step - 1, msg: '' }),
+      totalLine: bk.sel.length ? `${bk.sel.length} ${bk.sel.length === 1 ? t.service_1 : t.services_n} · ${dur} ${t.min} · ${price}€` : t.pick_service,
+      nextLabel: step === 4 ? t.confirm : t.next, nextDis: !canNext, nextBg: canNext ? '#EEF1F5' : '#161616', nextFg: canNext ? '#000' : '#5A5E64', nextCur: canNext ? 'pointer' : 'not-allowed',
+      next: () => { if (!canNext) return; if (step === 4) return this.confirm(); this.upd({ step: step + 1, msg: '' }); },
+      confirm: e => this.confirm(e),
+      doneSub: done && bk.email ? `${t.done_sub_mail} ${bk.email}. ${t.done_sub}` : t.done_sub,
+      downloadIcs: () => this.downloadIcs(), manageHref: done ? `#manage-${done.token}` : '#'
+    });
+  }
+}
+</script>
+</body>
+</html>
