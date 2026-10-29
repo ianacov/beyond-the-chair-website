@@ -46,7 +46,7 @@ button{font-family:inherit}
     </nav>
   </sc-if>
   <div style="display:flex;align-items:center;gap:8px">
-    <button onClick="{{ openBook }}" style="height:44px;padding:0 18px;background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap" style-hover="background:#fff">{{ headerBookLabel }}</button>
+    <button onClick="{{ openBook }}" aria-hidden="{{ headerBookHidden }}" style="height:44px;padding:0 18px;background:#EEF1F5;color:#000;border:0;border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;opacity:{{ headerBookOpacity }};visibility:{{ headerBookVis }};transition:opacity .25s ease, visibility .25s" style-hover="background:#fff">{{ headerBookLabel }}</button>
     <sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}">
       <button onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Menu" style="width:44px;height:44px;background:transparent;border:0;color:#EEF1F5;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
         <span style="display:block;width:22px;height:2px;background:#EEF1F5;transition:transform .25s;transform:{{ burgerTop }}"></span>
@@ -676,6 +676,7 @@ class Component extends DCLogic {
       t, isDesk, isMob, year: new Date().getFullYear(),
       headerBg: st.scrolled || st.menu ? '#000' : 'transparent', headerLine: st.scrolled && !st.menu ? 'rgba(238,241,245,0.12)' : 'transparent',
       headerBookLabel: t.book,
+      headerBookOpacity: (isMob && st.pastHero && !st.bk && !st.menu) ? 0 : 1, headerBookVis: (isMob && st.pastHero && !st.bk && !st.menu) ? 'hidden' : 'visible', headerBookHidden: (isMob && st.pastHero && !st.bk && !st.menu) ? 'true' : 'false',
       menuOpen: st.menu && isMob, burgerTop: st.menu ? 'translateY(4px) rotate(45deg)' : 'none', burgerBot: st.menu ? 'translateY(-4px) rotate(-45deg)' : 'none',
       toggleMenu: () => this.setState(s => ({ menu: !s.menu })), closeMenu: () => this.setState({ menu: false }),
       toggleLang: () => { const n = lang === 'el' ? 'en' : 'el'; try { localStorage.setItem('btc_lang', n); } catch (e) {} this.setState({ lang: n }); },
